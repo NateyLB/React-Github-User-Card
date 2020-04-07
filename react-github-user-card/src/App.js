@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import axios from 'axios';
 import Usercards from "./Usercards.js"
+import Search from "./Search.js"
 
 
 class App extends React.Component {
@@ -31,7 +32,6 @@ class App extends React.Component {
           this.setState({
             usersList: [...this.state.usersList, obj]
           })
-          console.log(this.state.usersList)
         })
         .catch(err => {
           console.log("Error:", err);
@@ -41,8 +41,22 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    this.setState({urlList:["https://api.github.com/users/nateylb"]})
     axios.get(`https://api.github.com/users/nateylb/followers`)
+      .then(response => {
+        var followersList = response.data.map(element => element.url);
+        this.setState({urlList:[...this.state.urlList, ...followersList]});
+        this.setState({urlList:[...this.state.urlList, "https://api.github.com/users/nateylb" ]})
+        this.createUsersList();
+      })
+      .catch(err => {
+        console.log("Error:", err);
+      })
+  }
+
+  componentDidUpdate(){
+    if(this.state.urlList.length < 2){
+      const followersStr = this.state.urlList[0] + "/followers";
+      axios.get(followersStr)
       .then(response => {
         var followersList = response.data.map(element => element.url);
         this.setState({urlList:[...this.state.urlList, ...followersList]});
@@ -51,13 +65,24 @@ class App extends React.Component {
       .catch(err => {
         console.log("Error:", err);
       })
+
+    }
   }
+
+  submit = (event, item) => {
+    event.preventDefault();
+    const urlStr ="https://api.github.com/users/";
+    this.setState({urlList: [urlStr + item]  })
+    this.setState({usersList: []  })
+    console.log(this.state)
+  };
 
 
   render() {
 
     return (
       <div>
+          <Search submit={this.submit}/>
           <Usercards usersList={this.state.usersList}/>
       </div>
     );

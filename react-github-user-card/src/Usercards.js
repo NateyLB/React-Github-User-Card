@@ -2,11 +2,6 @@ import React from 'react';
 import Usercard from "./Usercard.js"
 
 class Usercards extends React.Component {
-    constructor() {
-        super()
-        this.state = {}
-    }
-
     render() {
         return (
             <div>
