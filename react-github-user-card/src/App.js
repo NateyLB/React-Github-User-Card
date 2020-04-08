@@ -16,7 +16,7 @@ class App extends React.Component {
 
   createUsersList(){
     this.state.urlList.forEach(element => {
-      axios.get(element)
+      axios.get(`https://cors-anywhere.herokuapp.com/${element}`)
         .then(response => {
           const obj = {
             user: response.data.login,
@@ -41,11 +41,10 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    axios.get(`https://api.github.com/users/nateylb/followers`)
+    axios.get(`https://cors-anywhere.herokuapp.com/https://api.github.com/users/nateylb/followers`)
       .then(response => {
         var followersList = response.data.map(element => element.url);
-        this.setState({urlList:[...this.state.urlList, ...followersList]});
-        this.setState({urlList:[...this.state.urlList, "https://api.github.com/users/nateylb" ]})
+        this.setState({urlList:["https://api.github.com/users/nateylb", ...followersList]});
         this.createUsersList();
       })
       .catch(err => {
@@ -56,7 +55,7 @@ class App extends React.Component {
   componentDidUpdate(){
     if(this.state.urlList.length < 2){
       const followersStr = this.state.urlList[0] + "/followers";
-      axios.get(followersStr)
+      axios.get(`https://cors-anywhere.herokuapp.com/${followersStr}`)
       .then(response => {
         var followersList = response.data.map(element => element.url);
         this.setState({urlList:[...this.state.urlList, ...followersList]});
