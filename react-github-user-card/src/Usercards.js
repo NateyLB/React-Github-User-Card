@@ -6,7 +6,6 @@ class Usercards extends React.Component {
         return (
             <div>
                 {this.props.usersList.map(element => {
-                    // console.log(element,"inUsers")
                     return (
                         <Usercard 
                             key={element.id}

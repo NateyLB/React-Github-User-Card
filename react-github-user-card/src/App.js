@@ -73,7 +73,6 @@ class App extends React.Component {
     const urlStr ="https://api.github.com/users/";
     this.setState({urlList: [urlStr + item]  })
     this.setState({usersList: []  })
-    console.log(this.state)
   };
 
 
