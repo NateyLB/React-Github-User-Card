@@ -6,13 +6,13 @@ import { v4 as uuid } from 'uuid';
 class Usercard extends React.Component {
     constructor(){
         super()
-        this.state={id: uuid(),
-                    class: `.calendar ${this.id}`}
+        this.state={id: `_${uuid()}`,
+                    class: `calendar `}
     }
 
     componentDidMount(){
         console.log(this.state.id)
-        GitHubCalendar(document.querySelector(`.calendar`), this.props.user, {proxy: function(string) {return `https://cors-anywhere.herokuapp.com/${string}`}}, { responsive: true });
+        GitHubCalendar(document.querySelector(`.${this.state.id}`), this.props.user, {proxy: function(string) {return `https://cors-anywhere.herokuapp.com/${string}`}}, { responsive: true });
     }
     render() {
         return (
@@ -27,7 +27,7 @@ class Usercard extends React.Component {
                         <p>Followers: {this.props.followers}</p>
                         <p>Following: {this.props.following}</p>
                         <p>Bio: {this.props.bio}</p>
-                        <div className=".calendar">
+                        <div className={this.state.class + this.state.id}>
                         </div>
                     </div>
                 </div>
