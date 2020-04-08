@@ -69,5 +69,14 @@
   margin: 3px 0 10px;
 }
 
+.form{
+  width: 100%;
+  display:flex;
+  justify-content: center;
+}
+
+.form input{
+  
+}
 
 

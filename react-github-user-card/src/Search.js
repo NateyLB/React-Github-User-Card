@@ -13,7 +13,7 @@ class Search extends React.Component{
 
     render(){
         return(
-        <div>
+        <div className="form">
             <form onSubmit={event => this.props.submit(event, this.state.user)}>
                 <input type="text" onChange={this.onChange} />
                 <button>Search for a user </button>
